@@ -8,13 +8,25 @@
   Объект после манипуляций следует вернуть в качестве результата работы функции.
 */
 export function personUpdate(data) {
+    if (data['gender'] == 'female' && data.hasOwnProperty('age') == true) {
+        delete data.age;
+    } else {
+        if (
+            data['gender'] == 'male' &&
+            data.hasOwnProperty('income') == false
+        ) {
+            data.income = 100000;
+        }
+    }
+    return data;
 }
 
 /*
   В функцию objectFieldsList приходят три объекта с различными полями, список которых заранее неизвестен.
   Верните список названий этих полей в алфавитном порядке в виде массива строк.
 */
-export function objectFieldsList(obj1, obj2, obj3) {
+export function objectFieldsList(a, b, c) {
+    return [...Object.keys(a), ...Object.keys(b), ...Object.keys(c)].sort();
 }
 
 /*
@@ -23,4 +35,12 @@ export function objectFieldsList(obj1, obj2, obj3) {
   Количество клонов - count.
 */
 export function objectClone(obj, count) {
+    var clones = [];
+    const lodashClonedeep = require('lodash.clonedeep');
+    for (var i = 0; i < count; i++) {
+        let newClone = lodashClonedeep(obj);
+        newClone.id = i;
+        clones.push(newClone);
+    }
+    return clones;
 }
